@@ -5,12 +5,29 @@
   - [![Version](http://img.shields.io/gem/v/paper_trail-background.svg?style=flat-square)](https://rubygems.org/gems/paper_trail-background)
 
 
-TODO: Write a gem description
+Allows you to enqueue version creation/deletion as a background job to avoid having business logic blocked by changelog writing.
 
 
 ## Using
 
-TODO: Write usage instructions here
+First you'll need to setup a job for processing versions:
+
+``` ruby
+# The class MUST be named this
+class VersionJob < ApplicationJob
+
+  # These are settings you'll probably want, I suggest sidekiq-unique-jobs
+  sidekiq_options(
+    :queue => "versions",
+    :unique_across_queues => true,
+    :lock => :until_executed,
+    :log_duplicate_payload => true
+  )
+
+  # This wires up the background job
+  include PaperTrail::Background::Sidekiq
+end
+```
 
 
 ## Installing
@@ -32,3 +49,9 @@ Or install it yourself with:
   4. Commit your changes (`git commit -am 'Add some feature'`)
   5. Push to the branch (`git push origin my-new-feature`)
   6. Create new Pull Request
+
+
+## Todo
+
+  - Support other job types
+  - Allow for configuring the job class name

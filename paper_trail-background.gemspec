@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.email = ["kurtis@rainbolt-greene.online"]
   spec.summary = %q{A library for making paper_trail a background process}
   spec.description = spec.summary
-  spec.homepage = "http://krainboltgreene.github.io/paper_trail-background.rb"
+  spec.homepage = "https://github.com/krainboltgreene/paper_trail-background.rb"
   spec.license = "ISC"
 
   spec.files = Dir[File.join("lib", "**", "*"), "LICENSE", "README.md", "Rakefile"]

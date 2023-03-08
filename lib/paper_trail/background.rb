@@ -1,3 +1,5 @@
+require "paper_trail/record_trail"
+
 module PaperTrail
   require_relative "background/version"
   require_relative "background/sidekiq"

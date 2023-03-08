@@ -1,5 +1,4 @@
-$:.push File.expand_path(File.join("..", "lib"), __FILE__)
-require "paper_trail-background"
+require_relative "lib/paper_trail/background/version"
 
 Gem::Specification.new do |spec|
   spec.name = "paper_trail-background"

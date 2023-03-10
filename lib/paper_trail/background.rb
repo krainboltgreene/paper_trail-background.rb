@@ -2,7 +2,7 @@ require "paper_trail/record_trail"
 
 module PaperTrail
   require_relative "background/version"
-  require_relative "background/sidekiq"
+  require_relative "background/job"
 
   module Background
     # @api private
@@ -78,7 +78,7 @@ module PaperTrail
       version_class = record.class.paper_trail.version_class
 
       version_class.after_transaction do
-        VersionJob.perform_async(
+        VersionJob.perform_later(
           version_class,
           data,
           event

@@ -1,4 +1,5 @@
 require "paper_trail/record_trail"
+require "ar_after_transaction"
 
 module PaperTrail
   require_relative "background/version"

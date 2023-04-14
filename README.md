@@ -15,17 +15,10 @@ First you'll need to setup a job for processing versions:
 ``` ruby
 # The class MUST be named this
 class VersionJob < ApplicationJob
-
-  # These are settings you'll probably want, I suggest sidekiq-unique-jobs
-  sidekiq_options(
-    :queue => "versions",
-    :unique_across_queues => true,
-    :lock => :until_executed,
-    :log_duplicate_payload => true
-  )
+  queue_as :default
 
   # This wires up the background job
-  include PaperTrail::Background::Sidekiq
+  include PaperTrail::Background::Job
 end
 ```
 

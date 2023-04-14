@@ -1,6 +1,9 @@
+require "paper_trail/record_trail"
+require "ar_after_transaction"
+
 module PaperTrail
   require_relative "background/version"
-  require_relative "background/sidekiq"
+  require_relative "background/job"
 
   module Background
     # @api private
@@ -73,15 +76,12 @@ module PaperTrail
     end
 
     private def trigger_write(record, data, event)
-      version_class = record.class.paper_trail.version_class
+      version_class = record.class.paper_trail.version_class.name
 
-      version_class.after_transaction do
-        VersionJob.perform_async(
+      ActiveRecord::Base.after_transaction do
+        VersionJob.perform_later(
           version_class,
-          data.merge(
-            :item_id => record.id,
-            :item_type => record.class.name
-          ),
+          data,
           event
         )
       end

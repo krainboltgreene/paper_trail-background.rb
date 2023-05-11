@@ -13,10 +13,10 @@ Gem::Specification.new do |spec|
   spec.files = Dir[File.join("lib", "**", "*"), "LICENSE", "README.md", "Rakefile"]
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "bundler", "~> 1.16"
+  spec.add_development_dependency "bundler", "~> 2"
   spec.add_development_dependency "rspec", "~> 3.8"
   spec.add_development_dependency "rake", "~> 12.2"
-  spec.add_development_dependency "pry", "0.11.2"
+  spec.add_development_dependency "pry", "~> 0.14"
   spec.add_development_dependency "pry-doc", "0.11.1"
   spec.add_runtime_dependency "ar_after_transaction", "~> 0.8.0"
   spec.add_runtime_dependency "paper_trail", ">= 10.0.1"

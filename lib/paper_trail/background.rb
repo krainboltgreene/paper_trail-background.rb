@@ -2,6 +2,7 @@ require "paper_trail/record_trail"
 require "ar_after_transaction"
 
 module PaperTrail
+  require_relative "background/config"
   require_relative "background/version"
   require_relative "background/job"
 
@@ -11,6 +12,7 @@ module PaperTrail
     # paper_trail-association_tracking
     def record_create
       return unless enabled?
+      return if Config.configuration.opt_in && @record.paper_trail_options[:async].blank?
 
       event = PaperTrail::Events::Create.new(@record, true)
 
@@ -28,6 +30,7 @@ module PaperTrail
     # paper_trail-association_tracking
     def record_destroy(recording_order)
       return unless enabled?
+      return if Config.configuration.opt_in && @record.paper_trail_options[:async].blank?
       return if @record.new_record?
 
       in_after_callback = recording_order == "after"
@@ -46,6 +49,7 @@ module PaperTrail
     # paper_trail-association_tracking
     def record_update(force:, in_after_callback:, is_touch:)
       return unless enabled?
+      return if Config.configuration.opt_in && @record.paper_trail_options[:async].blank?
 
       event = PaperTrail::Events::Update.new(@record, in_after_callback, is_touch, nil)
 
@@ -63,6 +67,7 @@ module PaperTrail
     # paper_trail-association_tracking
     def record_update_columns(changes)
       return unless enabled?
+      return if Config.configuration.opt_in && @record.paper_trail_options[:async].blank?
 
       event = Events::Update.new(@record, false, false, changes)
 

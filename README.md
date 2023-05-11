@@ -22,6 +22,22 @@ class VersionJob < ApplicationJob
 end
 ```
 
+## Configuration
+In an initializer, you can specify whether you want to opt into this behavior on a per-model basis:
+
+``` ruby
+PaperTrail::Background::Config.configure do |config|
+  config.opt_in = true
+end
+```
+
+If opt-in behavior is set to `true`, you can enable async paper trails by specifying `async: true` in a given model's paper trail options:
+
+``` ruby
+class SomeModel < ActiveRecord::Base
+  has_paper_trail async: true
+end
+```
 
 ## Installing
 

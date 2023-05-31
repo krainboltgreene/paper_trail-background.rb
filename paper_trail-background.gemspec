@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.summary = %q{A library for making paper_trail a background process}
   spec.description = spec.summary
   spec.homepage = "https://github.com/krainboltgreene/paper_trail-background.rb"
-  spec.license = "ISC"
+  spec.license = "HL3"
 
   spec.files = Dir[File.join("lib", "**", "*"), "LICENSE", "README.md", "Rakefile"]
   spec.require_paths = ["lib"]
@@ -19,5 +19,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "pry", "~> 0.14"
   spec.add_development_dependency "pry-doc", "0.11.1"
   spec.add_runtime_dependency "ar_after_transaction", "~> 0.8.0"
-  spec.add_runtime_dependency "paper_trail", ">= 10.0.1"
+  spec.add_runtime_dependency "paper_trail", ">= 10"
 end

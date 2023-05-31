@@ -1,0 +1,42 @@
+name: Tests & Linting
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref_name || github.run_id }}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+    branches:
+    - main
+  push:
+    branches:
+    - main
+
+jobs:
+  rubocop:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true
+    - name: Rubocop check
+      run: bundle exec rubocop --cache true --display-only-fail-level-offenses --extra-details
+  brakeman:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true
+    - name: Rubocop check
+      run: bundle exec brakeman --no-exit-on-warn
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true
+    - name: Run tests
+      run: bundle exec rspec --backtrace lib/**/*_spec.rb

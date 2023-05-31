@@ -1,6 +1,5 @@
 # paper_trail-background
 
-  - [![Build](http://img.shields.io/travis-ci/krainboltgreene/paper_trail-background.svg?style=flat-square)](https://travis-ci.org/krainboltgreene/paper_trail-background)
   - [![Downloads](http://img.shields.io/gem/dtv/paper_trail-background.svg?style=flat-square)](https://rubygems.org/gems/paper_trail-background)
   - [![Version](http://img.shields.io/gem/v/paper_trail-background.svg?style=flat-square)](https://rubygems.org/gems/paper_trail-background)
 

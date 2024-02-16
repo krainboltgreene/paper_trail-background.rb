@@ -37,7 +37,6 @@ module PaperTrail
           end
         end
       end
-
     end
   end
 end

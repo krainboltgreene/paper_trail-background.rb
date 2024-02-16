@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "ar_after_transaction"
 
 require_relative "../paper_trail/background/rspec_helpers"

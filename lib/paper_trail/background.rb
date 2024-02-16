@@ -14,6 +14,7 @@ module PaperTrail
     # paper_trail-association_tracking
     def record_create
       return unless enabled?
+
       return super if @record.paper_trail_options[:async].blank?
 
       event = PaperTrail::Events::Create.new(@record, true)
@@ -83,11 +84,9 @@ module PaperTrail
     end
 
     private def trigger_write(record, data, event)
-      version_class = record.class.paper_trail.version_class.name
-
       record.class.after_transaction do
         VersionJob.perform_later(
-          version_class,
+          record.class.paper_trail.version_class.name,
           data,
           event
         )

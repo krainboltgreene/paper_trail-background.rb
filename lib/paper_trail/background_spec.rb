@@ -5,12 +5,31 @@ require "spec_helper"
 WithData = Struct.new(:data)
 WithVersionClass = Struct.new(:version_class)
 
-class DummyClass
+class SuperDummyClass
+  def record_create
+    @record = 1
+  end
+
+  def record_update(record)
+    @record = record
+  end
+
+  def record_destroy(record)
+    @record = record
+  end
+
+  def record_update_columns(record)
+    @record = record
+  end
+end
+
+class DummyClass < SuperDummyClass
   include PaperTrail::Background
 
   def initialize(options: {}, record: nil)
     @options = options
     @record = record
+    super()
   end
 
   def enabled?
@@ -60,7 +79,9 @@ RSpec.describe PaperTrail::Background do
       end
 
       it "does not trigger a write if record is opted in but async is blank" do
+        allow(record).to receive(:paper_trail_event).and_return(async: nil)
         allow(record).to receive(:paper_trail_options).and_return(async: nil)
+        allow(record.class).to receive(:paper_trail).and_return(WithVersionClass.new(Class))
 
         DummyClass.new(options: { enabled: true }, record:).record_create
 
@@ -70,8 +91,8 @@ RSpec.describe PaperTrail::Background do
       it "triggers a write if record is opted in and async is true" do
         allow(record).to receive(:paper_trail_options).and_return(async: true)
         allow(PaperTrail::Events::Create).to receive(:new).and_return(WithData.new({}))
-        allow(RSpec::Mocks::Double).to receive(:paper_trail).and_return(WithVersionClass.new(Class))
-        allow(ActiveRecord::Base).to receive(:after_transaction).and_yield
+        allow(record.class).to receive(:paper_trail).and_return(WithVersionClass.new(Class))
+        allow(record.class).to receive(:after_transaction).and_yield
 
         DummyClass.new(options: { enabled: true }, record:).record_create
 
@@ -115,8 +136,8 @@ RSpec.describe PaperTrail::Background do
       it "triggers a write if record is opted in and async is true" do
         allow(record).to receive_messages(paper_trail_options: { async: true }, new_record?: false)
         allow(PaperTrail::Events::Destroy).to receive(:new).and_return(WithData.new({}))
-        allow(RSpec::Mocks::Double).to receive(:paper_trail).and_return(WithVersionClass.new(Class))
-        allow(ActiveRecord::Base).to receive(:after_transaction).and_yield
+        allow(record.class).to receive(:paper_trail).and_return(WithVersionClass.new(Class))
+        allow(record.class).to receive(:after_transaction).and_yield
 
         DummyClass.new(options: { enabled: true }, record:).record_destroy("after")
 
@@ -152,8 +173,8 @@ RSpec.describe PaperTrail::Background do
       it "triggers a write if record is opted in and async is true" do
         allow(record).to receive_messages(paper_trail_options: { async: true }, new_record?: false)
         allow(PaperTrail::Events::Update).to receive(:new).and_return(WithData.new({}))
-        allow(RSpec::Mocks::Double).to receive(:paper_trail).and_return(WithVersionClass.new(Class))
-        allow(ActiveRecord::Base).to receive(:after_transaction).and_yield
+        allow(record.class).to receive(:paper_trail).and_return(WithVersionClass.new(Class))
+        allow(record.class).to receive(:after_transaction).and_yield
 
         DummyClass.new(options: { enabled: true }, record:).record_update(force: true, in_after_callback: true, is_touch: false)
 
@@ -189,8 +210,8 @@ RSpec.describe PaperTrail::Background do
       it "triggers a write if record is opted in and async is true" do
         allow(record).to receive_messages(paper_trail_options: { async: true }, new_record?: false)
         allow(PaperTrail::Events::Update).to receive(:new).and_return(WithData.new({}))
-        allow(RSpec::Mocks::Double).to receive(:paper_trail).and_return(WithVersionClass.new(Class))
-        allow(ActiveRecord::Base).to receive(:after_transaction).and_yield
+        allow(record.class).to receive(:paper_trail).and_return(WithVersionClass.new(Class))
+        allow(record.class).to receive(:after_transaction).and_yield
 
         DummyClass.new(options: { enabled: true }, record:).record_update_columns({})
 

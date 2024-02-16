@@ -1,4 +1,9 @@
+# frozen_string_literal: true
+
 require "spec_helper"
+
+WithData = Struct.new(:data)
+WithVersionClass = Struct.new(:version_class)
 
 class DummyClass
   include PaperTrail::Background
@@ -64,8 +69,8 @@ RSpec.describe PaperTrail::Background do
 
       it "triggers a write if record is opted in and async is true" do
         allow(record).to receive(:paper_trail_options).and_return(async: true)
-        allow(PaperTrail::Events::Create).to receive(:new).and_return(OpenStruct.new(data: {}))
-        allow(RSpec::Mocks::Double).to receive(:paper_trail).and_return(OpenStruct.new(version_class: Class))
+        allow(PaperTrail::Events::Create).to receive(:new).and_return(WithData.new({}))
+        allow(RSpec::Mocks::Double).to receive(:paper_trail).and_return(WithVersionClass.new(Class))
         allow(ActiveRecord::Base).to receive(:after_transaction).and_yield
 
         DummyClass.new(options: { enabled: true }, record:).record_create
@@ -100,8 +105,7 @@ RSpec.describe PaperTrail::Background do
       end
 
       it "does not trigger a write if record is new" do
-        allow(record).to receive(:paper_trail_options).and_return(async: true)
-        allow(record).to receive(:new_record?).and_return(true)
+        allow(record).to receive_messages(paper_trail_options: { async: true }, new_record?: true)
 
         DummyClass.new(options: { enabled: true }, record:).record_destroy("after")
 
@@ -109,10 +113,9 @@ RSpec.describe PaperTrail::Background do
       end
 
       it "triggers a write if record is opted in and async is true" do
-        allow(record).to receive(:paper_trail_options).and_return(async: true)
-        allow(record).to receive(:new_record?).and_return(false)
-        allow(PaperTrail::Events::Destroy).to receive(:new).and_return(OpenStruct.new(data: {}))
-        allow(RSpec::Mocks::Double).to receive(:paper_trail).and_return(OpenStruct.new(version_class: Class))
+        allow(record).to receive_messages(paper_trail_options: { async: true }, new_record?: false)
+        allow(PaperTrail::Events::Destroy).to receive(:new).and_return(WithData.new({}))
+        allow(RSpec::Mocks::Double).to receive(:paper_trail).and_return(WithVersionClass.new(Class))
         allow(ActiveRecord::Base).to receive(:after_transaction).and_yield
 
         DummyClass.new(options: { enabled: true }, record:).record_destroy("after")
@@ -147,10 +150,9 @@ RSpec.describe PaperTrail::Background do
       end
 
       it "triggers a write if record is opted in and async is true" do
-        allow(record).to receive(:paper_trail_options).and_return(async: true)
-        allow(record).to receive(:new_record?).and_return(false)
-        allow(PaperTrail::Events::Update).to receive(:new).and_return(OpenStruct.new(data: {}))
-        allow(RSpec::Mocks::Double).to receive(:paper_trail).and_return(OpenStruct.new(version_class: Class))
+        allow(record).to receive_messages(paper_trail_options: { async: true }, new_record?: false)
+        allow(PaperTrail::Events::Update).to receive(:new).and_return(WithData.new({}))
+        allow(RSpec::Mocks::Double).to receive(:paper_trail).and_return(WithVersionClass.new(Class))
         allow(ActiveRecord::Base).to receive(:after_transaction).and_yield
 
         DummyClass.new(options: { enabled: true }, record:).record_update(force: true, in_after_callback: true, is_touch: false)
@@ -185,10 +187,9 @@ RSpec.describe PaperTrail::Background do
       end
 
       it "triggers a write if record is opted in and async is true" do
-        allow(record).to receive(:paper_trail_options).and_return(async: true)
-        allow(record).to receive(:new_record?).and_return(false)
-        allow(PaperTrail::Events::Update).to receive(:new).and_return(OpenStruct.new(data: {}))
-        allow(RSpec::Mocks::Double).to receive(:paper_trail).and_return(OpenStruct.new(version_class: Class))
+        allow(record).to receive_messages(paper_trail_options: { async: true }, new_record?: false)
+        allow(PaperTrail::Events::Update).to receive(:new).and_return(WithData.new({}))
+        allow(RSpec::Mocks::Double).to receive(:paper_trail).and_return(WithVersionClass.new(Class))
         allow(ActiveRecord::Base).to receive(:after_transaction).and_yield
 
         DummyClass.new(options: { enabled: true }, record:).record_update_columns({})

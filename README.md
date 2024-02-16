@@ -1,9 +1,5 @@
 # paper_trail-background
 
-  - [![Downloads](http://img.shields.io/gem/dtv/paper_trail-background.svg?style=flat-square)](https://rubygems.org/gems/paper_trail-background)
-  - [![Version](http://img.shields.io/gem/v/paper_trail-background.svg?style=flat-square)](https://rubygems.org/gems/paper_trail-background)
-
-
 Allows you to enqueue version creation/deletion as a background job to avoid having business logic blocked by changelog writing.
 
 
@@ -51,7 +47,7 @@ Or install it yourself with:
 
 ## Contributing
 
-  1. Read the [Code of Conduct](/CONDUCT.md)
+  1. Read the [Code of Conduct](/CONDUCT)
   2. Fork it
   3. Create your feature branch (`git checkout -b my-new-feature`)
   4. Commit your changes (`git commit -am 'Add some feature'`)

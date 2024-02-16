@@ -1,11 +1,9 @@
+# frozen_string_literal: true
+
 module PaperTrail
   module Background
     class Configuration
-      attr_reader :opt_in
-
-      def opt_in=(value)
-        @opt_in = value
-      end
+      attr_accessor :opt_in
     end
 
     class Config
@@ -14,7 +12,7 @@ module PaperTrail
           @configuration ||= Configuration.new
         end
 
-        def configure(&block)
+        def configure
           yield(configuration)
         end
       end

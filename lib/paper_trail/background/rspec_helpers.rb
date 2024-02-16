@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PaperTrail
   module Background
     module RSpecHelpers
@@ -37,7 +39,6 @@ module PaperTrail
           end
         end
       end
-
     end
   end
 end

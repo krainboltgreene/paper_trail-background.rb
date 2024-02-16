@@ -1,6 +1,8 @@
-require 'ar_after_transaction'
+# frozen_string_literal: true
 
-require_relative '../paper_trail/background/rspec_helpers'
+require "ar_after_transaction"
+
+require_relative "../paper_trail/background/rspec_helpers"
 
 RSpec.configure do |config|
   config.include PaperTrail::Background::RSpecHelpers::InstanceMethods

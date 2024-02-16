@@ -1,0 +1,48 @@
+---
+require:
+  - rubocop-rspec
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rake
+AllCops:
+  NewCops: enable
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+  ConsistentQuotesInMultiline: false
+  Enabled: true
+Style/Documentation:
+  Enabled: false
+Style/AccessorGrouping:
+  Enabled: false
+Layout/LineLength:
+  Enabled: false
+Metrics/MethodLength:
+  Enabled: false
+RSpec/ExampleLength:
+  Enabled: false
+Metrics/ModuleLength:
+  Enabled: false
+Metrics/BlockLength:
+  Enabled: false
+Style/MultilineBlockChain:
+  Enabled: false
+Naming/FileName:
+  Enabled: false
+RSpec/NamedSubject:
+  Enabled: false
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+Metrics/ClassLength:
+  Enabled: false
+Metrics/AbcSize:
+  Enabled: false
+Metrics/PerceivedComplexity:
+  Enabled: false
+Metrics/CyclomaticComplexity:
+  Enabled: false
+Performance/MethodObjectAsBlock:
+  Enabled: false
+Style/AccessModifierDeclarations:
+  EnforcedStyle: inline
+Naming/RescuedExceptionsVariableName:
+  Enabled: false

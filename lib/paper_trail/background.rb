@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "paper_trail/record_trail"
 require "ar_after_transaction"
 

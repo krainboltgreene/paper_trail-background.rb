@@ -6,12 +6,11 @@ concurrency:
 
 on:
   pull_request:
-    types: [opened, reopened, synchronize, ready_for_review]
     branches:
-      - main
+      - core
   push:
     branches:
-      - main
+      - core
   workflow_dispatch:
 
 jobs:
